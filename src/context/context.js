@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { linkData } from "./linkData";
 import { socialData } from "./socialData";
+import { items } from "./productData";
 const ProductContext = React.createContext();
 //Provider
 //Consumer
@@ -8,11 +9,68 @@ class ProductProvider extends Component {
   state = {
     sidebarOpen: false,
     cartOpen: false,
-    cartItems: 2,
     links: linkData,
     socialIcons: socialData,
-    cart: []
+    cart: [],
+    cartItems: 0,
+    cartSubTotal: 0,
+    cartTax: 0,
+    carTotal: 0,
+    storeProducts: [],
+    filteredProducts: [],
+    featuredProducts: [],
+    singleProduct: {},
+    loading: false
   };
+  componentDidMount() {
+    // from contentfull items
+
+    this.setProducts(items);
+  }
+
+  // set Products
+
+  setProducts = products => {
+    let storeProducts = products.map(item => {
+      const { id } = item.sys;
+      const image = item.fields.image.fields.file.url;
+      const product = { id, ...item.fields, image };
+      return product;
+    });
+    // featured Products
+    let featuredProducts = storeProducts.filter(item => item.featured === true);
+    this.setState({
+      storeProducts,
+      filteredProducts: storeProducts,
+      featuredProducts,
+      cart: this.getStorageCart(),
+      singleProduct: this.getStorageProduct(),
+      loading: false
+    });
+  };
+  // get cart from local storage
+  getStorageCart = () => {
+    return [];
+  };
+  // get product from local storage
+  getStorageProduct = () => {
+    return {};
+  };
+  // get totals
+  getTotals = () => {};
+  // add totals
+  addTotals = () => {};
+  // sync storage
+  syncStorage = () => {};
+  // add to cart
+  addTcart = id => {
+    console.log(`add to cart ${id}`);
+  };
+  // set singel product
+  setSingleProduct = id => {
+    console.log(`set single product ${id}`);
+  };
+
   // handle sidebar
   handleSidebar = () => {
     this.setState({ sidebarOpen: !this.state.sidebarOpen });
@@ -37,7 +95,9 @@ class ProductProvider extends Component {
           handleSidebar: this.handleSidebar,
           handleCart: this.handleCart,
           closeCart: this.closeCart,
-          openeCart: this.openeCart
+          openeCart: this.openeCart,
+          addTocart: this.addTcart,
+          setSingleProduct: this.setSingleProduct
         }}
       >
         {this.props.children};
