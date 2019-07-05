@@ -63,7 +63,7 @@ class ProductProvider extends Component {
   // sync storage
   syncStorage = () => {};
   // add to cart
-  addTcart = id => {
+  addToCart = id => {
     console.log(`add to cart ${id}`);
   };
   // set singel product
@@ -84,7 +84,7 @@ class ProductProvider extends Component {
     this.setState({ cartOpen: false });
   };
   // Open cart
-  openeCart = () => {
+  openCart = () => {
     this.setState({ cartOpen: true });
   };
   render() {
@@ -95,8 +95,8 @@ class ProductProvider extends Component {
           handleSidebar: this.handleSidebar,
           handleCart: this.handleCart,
           closeCart: this.closeCart,
-          openeCart: this.openeCart,
-          addTocart: this.addTcart,
+          openCart: this.openCart,
+          addToCart: this.addToCart,
           setSingleProduct: this.setSingleProduct
         }}
       >
