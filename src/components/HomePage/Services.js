@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { FaDolly, FaRedo, FaDollarSing, FaDollarSign } from "react-icons/fa";
+import { FaDolly, FaRedo, FaDollarSign } from "react-icons/fa";
 export default class Services extends Component {
   state = {
     services: [
@@ -21,7 +21,7 @@ export default class Services extends Component {
       {
         id: 3,
         icon: <FaDollarSign />,
-        title: "scured payment",
+        title: "secured payment",
         text:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, necessitatibus."
       }
