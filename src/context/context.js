@@ -8,14 +8,14 @@ const ProductContext = React.createContext();
 class ProductProvider extends Component {
   state = {
     sidebarOpen: false,
-    cartOpen: false,
+    cartOpen: true,
     links: linkData,
     socialIcons: socialData,
     cart: [],
     cartItems: 0,
     cartSubTotal: 0,
     cartTax: 0,
-    carTotal: 0,
+    cartTotal: 0,
     storeProducts: [],
     filteredProducts: [],
     featuredProducts: [],
@@ -147,7 +147,7 @@ class ProductProvider extends Component {
   };
   // handle sidecart
   handleCart = () => {
-    this.setState({ cartOpen: !this.state.sidebarOpen });
+    this.setState({ cartOpen: !this.state.cartOpen });
   };
   // close cart
   closeCart = () => {
