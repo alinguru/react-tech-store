@@ -157,6 +157,7 @@ class ProductProvider extends Component {
   openCart = () => {
     this.setState({ cartOpen: true });
   };
+
   render() {
     return (
       <ProductContext.Provider
