@@ -1,7 +1,7 @@
 import React from "react";
 import { ProductConsumer } from "../../context";
 import CartItem from "./CartItem";
-export default function CartLIst() {
+export default function CartList() {
   return (
     <div className="container-fluid">
       {/* row */}
