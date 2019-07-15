@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { linkData } from "./linkData";
 import { socialData } from "./socialData";
 import { items } from "./productData";
+import { log } from "util";
 const ProductContext = React.createContext();
 //Provider
 //Consumer
@@ -20,7 +21,13 @@ class ProductProvider extends Component {
     filteredProducts: [],
     featuredProducts: [],
     singleProduct: {},
-    loading: true
+    loading: true,
+    search: "",
+    price: 0,
+    min: 0,
+    max: 0,
+    company: "all",
+    shipping: false
   };
   componentDidMount() {
     // from contentfull items
@@ -39,6 +46,9 @@ class ProductProvider extends Component {
     });
     // featured Products
     let featuredProducts = storeProducts.filter(item => item.featured === true);
+    // get max price
+    let maxPrice = Math.max(...storeProducts.map(item => item.price));
+
     this.setState(
       {
         storeProducts,
@@ -46,7 +56,8 @@ class ProductProvider extends Component {
         featuredProducts,
         cart: this.getStorageCart(),
         singleProduct: this.getStorageProduct(),
-        loading: false
+        loading: false,
+        price: maxPrice
       },
       () => {
         this.addTotals();
@@ -177,18 +188,61 @@ class ProductProvider extends Component {
       }
     );
   };
-  // increment
+  // decrement
   decrement = id => {
-    console.log(id);
+    let tempCart = [...this.state.cart];
+    const cartItem = tempCart.find(item => item.id === id);
+
+    cartItem.count = cartItem.count - 1;
+    if (cartItem.count === 0) {
+      this.removeItem(id);
+    } else {
+      cartItem.total = cartItem.count * cartItem.price;
+      cartItem.total = parseFloat(cartItem.total.toFixed(2));
+      this.setState(
+        () => {
+          return {
+            cart: [...tempCart]
+          };
+        },
+        () => {
+          this.addTotals();
+          this.syncStorage();
+        }
+      );
+    }
   };
 
-  // increment
+  // removeItem
   removeItem = id => {
-    console.log(id);
+    let tempCart = [...this.state.cart];
+    tempCart = tempCart.filter(item => item.id !== id);
+    this.setState(
+      {
+        cart: [...tempCart]
+      },
+      () => {
+        this.addTotals();
+        this.syncStorage();
+      }
+    );
   };
-  cleqarCart = () => {
-    console.log("awesome you just cleared the cart");
+  clearCart = () => {
+    this.setState(
+      {
+        cart: []
+      },
+      () => {
+        this.addTotals();
+        this.syncStorage();
+      }
+    );
   };
+  //handle filtering
+  handleChange = event => {
+    console.log(event);
+  };
+  sortData = () => {};
 
   render() {
     return (
@@ -204,7 +258,8 @@ class ProductProvider extends Component {
           increment: this.increment,
           decrement: this.decrement,
           removeItem: this.removeItem,
-          clearCart: this.clearCart
+          clearCart: this.clearCart,
+          handleChange: this.handleChange
         }}
       >
         {this.props.children};
