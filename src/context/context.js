@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { linkData } from "./linkData";
 import { socialData } from "./socialData";
 import { items } from "./productData";
-import { log } from "util";
+
 const ProductContext = React.createContext();
 //Provider
 //Consumer
@@ -27,7 +27,7 @@ class ProductProvider extends Component {
     min: 0,
     max: 0,
     company: "all",
-    shipping: false
+    shipping: true
   };
   componentDidMount() {
     // from contentfull items
