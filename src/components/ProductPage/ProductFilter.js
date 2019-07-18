@@ -50,9 +50,16 @@ export default function ProductFilter() {
                     value={company}
                     className="filter-item"
                   >
-                    <option value="all">all</option>
+                    {/* <option value="all">all</option>
                     <option value="fuji">fuji</option>
-                    <option value="htc">htc</option>
+        <option value="htc">htc</option> */}
+                    {companies.map((company, index) => {
+                      return (
+                        <option key={index} vlue={company}>
+                          {company}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 {/* end of category  search */}

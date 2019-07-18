@@ -27,7 +27,7 @@ class ProductProvider extends Component {
     min: 0,
     max: 0,
     company: "all",
-    shipping: true
+    shipping: false
   };
   componentDidMount() {
     // from contentfull items
@@ -240,9 +240,23 @@ class ProductProvider extends Component {
   };
   //handle filtering
   handleChange = event => {
-    console.log(event);
+    const name = event.target.name;
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+    this.setState(
+      {
+        [name]: value
+      },
+      this.sortData
+    );
   };
-  sortData = () => {};
+  sortData = () => {
+    const { storeProducts, price, company, shipping, search } = this.state;
+    let tempProducts = [...storeProducts];
+    this.setState({ filteredProducts: tempProducts });
+  };
 
   render() {
     return (
